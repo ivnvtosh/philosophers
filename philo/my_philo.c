@@ -6,7 +6,7 @@
 /*   By: ccamie <ccamie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 20:05:16 by ccamie            #+#    #+#             */
-/*   Updated: 2022/03/15 22:52:12 by ccamie           ###   ########.fr       */
+/*   Updated: 2022/03/19 21:41:23 by ccamie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ t_philos	*my_philonew(int id, t_rule *rule)
 		return (NULL);
 	}
 	philo->id = id;
+	philo->time_last_eat.tv_sec = 0;
+	philo->time_last_eat.tv_usec = 0;
 	philo->rule = rule;
 	philos->philo = philo;
 	philos->next = NULL;

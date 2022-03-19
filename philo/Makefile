@@ -6,7 +6,7 @@
 #    By: ccamie <ccamie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/12 05:02:28 by ccamie            #+#    #+#              #
-#    Updated: 2022/03/17 19:24:06 by ccamie           ###   ########.fr        #
+#    Updated: 2022/03/19 19:33:45 by ccamie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,8 @@ CC				=	cc
 CFLAGS			=	-Wall -Wextra -Werror
 RM				=	rm -f
 
-SOURCE			=	foo.c		\
-					check.c		\
+SOURCE			=	check.c		\
+					foo.c		\
 					main.c		\
 					my_fork.c	\
 					my_philo.c	\

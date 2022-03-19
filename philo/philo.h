@@ -6,7 +6,7 @@
 /*   By: ccamie <ccamie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 04:39:47 by ccamie            #+#    #+#             */
-/*   Updated: 2022/03/17 17:59:04 by ccamie           ###   ########.fr       */
+/*   Updated: 2022/03/19 21:42:00 by ccamie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_philo
 	pthread_mutex_t	left;
 	pthread_mutex_t	right;
 	struct s_rule	*rule;
+	struct timeval	time_last_eat;
 }	t_philo;
 
 typedef struct s_philos
@@ -79,6 +80,6 @@ int		ft_isspace(int character);
 //		utils2
 int			ft_atoi(const char *string);
 long		ft_atol(const char *string);
-long int	timee(struct timeval time);
+long int	get_time(struct timeval time);
 
 #endif // PHILO_H

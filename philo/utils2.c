@@ -6,7 +6,7 @@
 /*   By: ccamie <ccamie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 18:13:49 by ccamie            #+#    #+#             */
-/*   Updated: 2022/03/17 17:58:47 by ccamie           ###   ########.fr       */
+/*   Updated: 2022/03/19 21:41:32 by ccamie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,11 @@ long	ft_atol(const char *string)
 	return (number * sign);
 }
 
-long int	timee(struct timeval time)
+long int	get_time(struct timeval time)
 {
 	struct timeval	now;
 
-	gettimeofday(&now, NULL);
+	if (gettimeofday(&now, NULL) == -1)
+		return (-1);
 	return (now.tv_sec * 1000 + now.tv_usec / 1000) - (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
