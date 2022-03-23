@@ -57,8 +57,7 @@ t_philos	*my_philonew(int id, t_rule *rule)
 		return (NULL);
 	}
 	philo->id = id;
-	philo->time_last_eat.tv_sec = 0;
-	philo->time_last_eat.tv_usec = 0;
+	philo->time_last_eat = 0;
 	philo->rule = rule;
 	philos->philo = philo;
 	philos->next = NULL;

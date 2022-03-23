@@ -22,11 +22,11 @@
 
 typedef struct s_rule
 {
-	int				count_eat;
-	int				time_die;
-	int				time_eat;
-	int				time_sleep;
-	struct timeval	time;
+	int		count_eat;
+	int		time_die;
+	int		time_eat;
+	int		time_sleep;
+	long	time;
 }	t_rule;
 
 typedef struct s_philo
@@ -35,7 +35,7 @@ typedef struct s_philo
 	pthread_mutex_t	left;
 	pthread_mutex_t	right;
 	struct s_rule	*rule;
-	struct timeval	time_last_eat;
+	long			time_last_eat;
 }	t_philo;
 
 typedef struct s_philos
@@ -78,8 +78,8 @@ int		ft_isdigit(int character);
 int		ft_isspace(int character);
 
 //		utils2
-int			ft_atoi(const char *string);
-long		ft_atol(const char *string);
-long int	get_time(struct timeval time);
+int		ft_atoi(const char *string);
+long	ft_atol(const char *string);
+long	get_time(long time);
 
 #endif // PHILO_H

@@ -50,11 +50,11 @@ long	ft_atol(const char *string)
 	return (number * sign);
 }
 
-long int	get_time(struct timeval time)
+long	get_time(long time)
 {
 	struct timeval	now;
 
 	if (gettimeofday(&now, NULL) == -1)
 		return (-1);
-	return (now.tv_sec * 1000 + now.tv_usec / 1000) - (time.tv_sec * 1000 + time.tv_usec / 1000);
+	return (now.tv_sec * 1000 + now.tv_usec / 1000) - time;
 }

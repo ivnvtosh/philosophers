@@ -16,107 +16,107 @@ int		parser(t_data *data, int argc, char **argv);
 void	*foo1(void *pointer);
 void	*foo2(void *pointer);
 
-static int	start(t_rule *rule, t_philos *philos, int count)
+static int	philos_create(t_rule *rule, t_philos *philos, int count, pthread_t *potok)
 {
-	pthread_t	*potok;
-	t_philos	*first;
-	int			i;
+	int	i;
 
-	potok = (pthread_t *)malloc(sizeof(pthread_t) * count);
-	if (potok == NULL)
-		return (EXIT_FAILURE);
 	i = 0;
-	if (gettimeofday(&rule->time, NULL) == -1)
-	{
-		free(potok);
-		return (EXIT_FAILURE);
-	}
-	first = philos;
 	while (i < count)
 	{
 		if (i % 2 == 0)
 		{
 			if (pthread_create(&potok[i], NULL, foo1, philos->philo) != 0)
-			{
-				printf("Error: create\n");
-				free(potok);
-				return (EXIT_FAILURE);
-			}
+				return (-1);
 		}
 		else
 		{
 			if (pthread_create(&potok[i], NULL, foo2, philos->philo) != 0)
-			{
-				printf("Error: create\n");
-				free(potok);
-				return (EXIT_FAILURE);
-			}
+				return (-1);
 		}
+		philos->philo->time_last_eat = rule->time;
 		philos = philos->next;
 		i += 1;
 	}
-	
+	return (EXIT_SUCCESS);
+}
 
+static int	check_is_live(t_rule *rule, t_philos *philos)
+{
 	struct timeval	now;
-	usleep(rule->time_die * 1000 + 1000000);
+	t_philos		*first;
 
+	first = philos;
 	while (1)
 	{
 		philos = first;
 		if (gettimeofday(&now, NULL) == -1)
-		{
-				printf("Error: time\n");
-				free(potok);
-				return (EXIT_FAILURE);
-		}
+			return (-1);
 		while (philos != NULL)
 		{
-			if ((now.tv_sec * 1000 + now.tv_usec / 1000) - (philos->philo->time_last_eat.tv_sec * 1000 + philos->philo->time_last_eat.tv_usec / 1000) > philos->philo->rule->time_die)
+			if ((now.tv_sec * 1000 + now.tv_usec / 1000) - philos->philo->time_last_eat > rule->time_die)
 			{
-				return (0);
+				printf("WTF: %ld\n", (now.tv_sec * 1000 + now.tv_usec / 1000) - philos->philo->time_last_eat);
+				return (EXIT_SUCCESS);
 			}
 			philos = philos->next;
 		}
+		usleep(10000);
 	}
+	return (EXIT_SUCCESS);
+}
 
+static int	start(t_rule *rule, t_philos *philos, int count, pthread_t *potok)
+{
+	struct timeval	time;
 
+	if (gettimeofday(&time, NULL) == -1)
+		return (EXIT_FAILURE);
+	rule->time = time.tv_sec * 1000 + time.tv_usec / 1000;
+	if (philos_create(rule, philos, count, potok) == -1)
+		return (EXIT_FAILURE);
+	if (check_is_live(rule, philos) == -1)
+		return (EXIT_FAILURE);
+	int	i;
 
-	
-	// i = 0;
-	// while (i < count)
-	// {
-	// 	if (pthread_join(potok[i], NULL))
-	// 	{
-	// 		free(potok);
-	// 		printf("Error: join\n");
-	// 		return (EXIT_FAILURE);
-	// 	}
-	// 	// if (pthread_detach(potok[i], NULL))
-	// 	// {
-	// 	// 	free(potok);
-	// 	// 	printf("Error: join\n");
-	// 	// 	return (EXIT_FAILURE);
-	// 	// }
-	// 	i += 1;
-	// }
-	free(potok);
+	i = 0;
+	while (i < count)
+	{
+		// if (pthread_join(potok[i], NULL))
+		// {
+		// 	free(potok);
+		// 	printf("Error: join\n");
+		// 	return (EXIT_FAILURE);
+		// }
+		pthread_detach(potok[i]);
+		i += 1;
+	}
 	return (EXIT_SUCCESS);
 }
 
 static int	philo(int argc, char **argv)
 {
-	t_data	data;
+	t_data		data;
+	pthread_t	*potok;
 
 	if (parser(&data, argc, argv))
 	{
 		return (my_error("Error\n"));
 	}
-	if (start(&data.rule, data.philos, data.philo_count))
+	potok = (pthread_t *)malloc(sizeof(pthread_t) * data.philo_count);
+	if (potok == NULL)
 	{
 		my_forkclear(&data.forks);
 		my_philoclear(&data.philos);
 		return (my_error("Error\n"));
 	}
+	if (start(&data.rule, data.philos, data.philo_count, potok))
+	{
+		free(potok);
+		my_forkclear(&data.forks);
+		my_philoclear(&data.philos);
+		return (my_error("Error\n"));
+	}
+	free(potok);
 	my_forkclear(&data.forks);
 	my_philoclear(&data.philos);
 	return (EXIT_SUCCESS);
