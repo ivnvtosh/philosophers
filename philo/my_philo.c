@@ -6,7 +6,7 @@
 /*   By: ccamie <ccamie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 20:05:16 by ccamie            #+#    #+#             */
-/*   Updated: 2022/03/19 21:41:23 by ccamie           ###   ########.fr       */
+/*   Updated: 2022/03/23 21:46:14 by ccamie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	my_philoclear(t_philos **philos)
 	{
 		prev = elem;
 		elem = elem->next;
+		pthread_mutex_destroy(&prev->philo->status);		//	wtf!!!!
 		free(prev->philo);
 		free(prev);
 	}
@@ -51,6 +52,12 @@ t_philos	*my_philonew(int id, t_rule *rule)
 	philo = (t_philo *)malloc(sizeof(t_philo));
 	philos = (t_philos *)malloc(sizeof(t_philos));
 	if (philo == NULL || philos == NULL)
+	{
+		free(philo);
+		free(philos);
+		return (NULL);
+	}
+	if (pthread_mutex_init(&philo->status, NULL) != 0)
 	{
 		free(philo);
 		free(philos);

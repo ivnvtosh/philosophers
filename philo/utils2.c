@@ -6,7 +6,7 @@
 /*   By: ccamie <ccamie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 18:13:49 by ccamie            #+#    #+#             */
-/*   Updated: 2022/03/19 21:41:32 by ccamie           ###   ########.fr       */
+/*   Updated: 2022/03/23 19:54:32 by ccamie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,5 @@ long	get_time(long time)
 
 	if (gettimeofday(&now, NULL) == -1)
 		return (-1);
-	return (now.tv_sec * 1000 + now.tv_usec / 1000) - time;
+	return (now.tv_sec * 1000 + now.tv_usec / 1000 - time);
 }

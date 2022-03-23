@@ -6,7 +6,7 @@
 /*   By: ccamie <ccamie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 16:35:49 by ccamie            #+#    #+#             */
-/*   Updated: 2022/03/19 22:55:40 by ccamie           ###   ########.fr       */
+/*   Updated: 2022/03/23 19:55:11 by ccamie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	check_for_range_int(char **argv);
 static int	get_philo(t_philos **philos, int count, t_rule *rule)
 {
 	t_philos	*new;
-	int		i;
+	int			i;
 
 	*philos = NULL;
 	i = 1;
@@ -103,7 +103,10 @@ int	parser(t_data *data, int argc, char **argv)
 	if (get_fork(&data->forks, data->philo_count))
 		return (EXIT_FAILURE);
 	if (get_philo(&data->philos, data->philo_count, &data->rule))
+	{
+		my_forkclear(&data->forks);
 		return (EXIT_FAILURE);
+	}
 	give_a_fork_to_philo(data->forks, data->philos);
 	return (EXIT_SUCCESS);
 }

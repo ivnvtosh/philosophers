@@ -6,7 +6,7 @@
 /*   By: ccamie <ccamie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 04:39:47 by ccamie            #+#    #+#             */
-/*   Updated: 2022/03/19 21:42:00 by ccamie           ###   ########.fr       */
+/*   Updated: 2022/03/23 21:38:13 by ccamie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_philo
 	pthread_mutex_t	right;
 	struct s_rule	*rule;
 	long			time_last_eat;
+	pthread_mutex_t	status;
 }	t_philo;
 
 typedef struct s_philos
@@ -59,10 +60,10 @@ typedef struct s_data
 }	t_data;
 
 //		my_fork
-t_forks	*my_forklast(t_forks *forks);
-void	my_forkadd_back(t_forks **forks, t_forks *new);
-void	my_forkclear(t_forks **forks);
-t_forks	*my_forknew(void);
+t_forks		*my_forklast(t_forks *forks);
+void		my_forkadd_back(t_forks **forks, t_forks *new);
+void		my_forkclear(t_forks **forks);
+t_forks		*my_forknew(void);
 
 //		my_philo
 t_philos	*my_philolast(t_philos *philos);
@@ -71,15 +72,15 @@ void		my_philoclear(t_philos **philos);
 t_philos	*my_philonew(int id, t_rule *rule);
 
 //		utils1
-size_t	ft_strlen(const char *string);
-int		ft_putstr_fd(const char *string, int fd);
-int		my_error(const char *string);
-int		ft_isdigit(int character);
-int		ft_isspace(int character);
+size_t		ft_strlen(const char *string);
+int			ft_putstr_fd(const char *string, int fd);
+int			my_error(const char *string);
+int			ft_isdigit(int character);
+int			ft_isspace(int character);
 
 //		utils2
-int		ft_atoi(const char *string);
-long	ft_atol(const char *string);
-long	get_time(long time);
+int			ft_atoi(const char *string);
+long		ft_atol(const char *string);
+long		get_time(long time);
 
 #endif // PHILO_H
