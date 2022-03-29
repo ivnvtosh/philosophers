@@ -6,7 +6,7 @@
 /*   By: ccamie <ccamie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 04:39:47 by ccamie            #+#    #+#             */
-/*   Updated: 2022/03/23 21:38:13 by ccamie           ###   ########.fr       */
+/*   Updated: 2022/03/29 20:37:22 by ccamie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ typedef struct s_rule
 typedef struct s_philo
 {
 	int				id;
-	pthread_mutex_t	left;
-	pthread_mutex_t	right;
+	pthread_mutex_t	*left;
+	pthread_mutex_t	*right;
 	struct s_rule	*rule;
 	long			time_last_eat;
 	pthread_mutex_t	status;
@@ -82,5 +82,6 @@ int			ft_isspace(int character);
 int			ft_atoi(const char *string);
 long		ft_atol(const char *string);
 long		get_time(long time);
+long		ft_usleep(long time);
 
 #endif // PHILO_H

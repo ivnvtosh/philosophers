@@ -6,7 +6,7 @@
 /*   By: ccamie <ccamie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 18:13:49 by ccamie            #+#    #+#             */
-/*   Updated: 2022/03/23 19:54:32 by ccamie           ###   ########.fr       */
+/*   Updated: 2022/03/29 20:44:22 by ccamie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,20 @@ long	get_time(long time)
 	if (gettimeofday(&now, NULL) == -1)
 		return (-1);
 	return (now.tv_sec * 1000 + now.tv_usec / 1000 - time);
+}
+
+long	ft_usleep(long time)
+{
+	struct timeval	now;
+	long			start;
+
+	if (gettimeofday(&now, NULL) == -1)
+		return (-1);
+	start = now.tv_sec * 1000 + now.tv_usec / 1000;
+	while (now.tv_sec * 1000 + now.tv_usec / 1000 - start < time)
+	{
+		if (gettimeofday(&now, NULL) == -1)
+			return (-1);
+	}
+	return (0);
 }

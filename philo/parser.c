@@ -6,7 +6,7 @@
 /*   By: ccamie <ccamie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 16:35:49 by ccamie            #+#    #+#             */
-/*   Updated: 2022/03/23 19:55:11 by ccamie           ###   ########.fr       */
+/*   Updated: 2022/03/29 20:46:28 by ccamie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,15 @@ static void	give_a_fork_to_philo(t_forks *forks, t_philos *philos)
 {
 	t_forks	*prev;
 
-	philos->philo->left = my_forklast(forks)->mutex;
-	philos->philo->right = forks->mutex;
+	philos->philo->left = &my_forklast(forks)->mutex;
+	philos->philo->right = &forks->mutex;
 	prev = forks;
 	forks = forks->next;
 	philos = philos->next;
 	while (forks != NULL)
 	{
-		philos->philo->left = prev->mutex;
-		philos->philo->right = forks->mutex;
+		philos->philo->left = &prev->mutex;
+		philos->philo->right = &forks->mutex;
 		prev = forks;
 		forks = forks->next;
 		philos = philos->next;

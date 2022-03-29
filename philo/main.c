@@ -6,7 +6,7 @@
 /*   By: ccamie <ccamie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/12 04:39:09 by ccamie            #+#    #+#             */
-/*   Updated: 2022/03/23 21:41:46 by ccamie           ###   ########.fr       */
+/*   Updated: 2022/03/29 20:44:32 by ccamie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,9 @@ static int	philo(int argc, char **argv)
 		my_philoclear(&data.philos);
 		return (my_error("Error\n"));
 	}
-	if (data.philo_count == 1)
-		start_one(&data.rule, data.philos, data.philo_count, potok);
-	else
+	// if (data.philo_count == 1)
+	// 	start_one(&data.rule, data.philos, data.philo_count, potok);
+	// else
 		start(&data.rule, data.philos, data.philo_count, potok);
 	free(potok);
 	my_forkclear(&data.forks);

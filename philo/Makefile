@@ -6,7 +6,7 @@
 #    By: ccamie <ccamie@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/12 05:02:28 by ccamie            #+#    #+#              #
-#    Updated: 2022/03/23 21:55:35 by ccamie           ###   ########.fr        #
+#    Updated: 2022/03/29 20:39:25 by ccamie           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ HEADER			=	philo.h
 
 CC				=	cc
 # CFLAGS			=	-Wall -Wextra -Werror -fsanitize=thread
-CFLAGS			=	-Wall -Wextra -Werror
+# CFLAGS			=	-Wall -Wextra -Werror 
 RM				=	rm -f
 
 SOURCE			=	check.c		\
@@ -36,6 +36,7 @@ OBJECT			=	$(addprefix ../object/, $(SOURCE:.c=.o))
 all				:	$(NAME)
 
 $(NAME)			:	$(OBJECT)
+#					$(CC) $(OBJECT) -fsanitize=thread -o $(NAME)
 					$(CC) $(OBJECT) -o $(NAME)
 
 ../object/%.o	:	%.c $(HEADER)

@@ -6,7 +6,7 @@
 /*   By: ccamie <ccamie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 17:57:12 by ccamie            #+#    #+#             */
-/*   Updated: 2022/03/23 21:44:22 by ccamie           ###   ########.fr       */
+/*   Updated: 2022/03/29 20:45:08 by ccamie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	is_sleeping(t_philo *philo, t_rule rule)
 	if (time == -1)
 		return (EXIT_FAILURE);
 	printf("%5ld %3d is sleeping\n", time, philo->id);
-	if (usleep(rule.time_sleep * 1000) == -1)
+	if (ft_usleep(rule.time_sleep) == -1)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
@@ -49,10 +49,10 @@ static int	is_eating(t_philo *philo, t_rule rule)
 	if (time == -1)
 		return (EXIT_FAILURE);
 	printf("%5ld %3d is eating\n", time, philo->id);
-	if (usleep(rule.time_eat * 1000) == -1)
+	if (ft_usleep(rule.time_eat) == -1)
 		return (EXIT_FAILURE);
-	if (pthread_mutex_unlock(&philo->left) || \
-		pthread_mutex_unlock(&philo->right))
+	if (pthread_mutex_unlock(philo->left) || \
+		pthread_mutex_unlock(philo->right))
 		return (EXIT_FAILURE);
 	if (gettimeofday(&now, NULL) == -1)
 		return (EXIT_FAILURE);
@@ -76,13 +76,13 @@ void	*foo1(void *pointer)
 	{
 		if (is_thinking(philo, rule))
 			return (NULL);
-		if (pthread_mutex_lock(&philo->left))
+		if (pthread_mutex_lock(philo->left))
 			return (NULL);
 		time = get_time(rule.time);
 		if (time == -1)
 			return (NULL);
 		printf("%5ld %3d has taken left fork\n", time, philo->id);
-		if (pthread_mutex_lock(&philo->right))
+		if (pthread_mutex_lock(philo->right))
 			return (NULL);
 		if (is_eating(philo, rule))
 			return (NULL);
@@ -107,13 +107,13 @@ void	*foo2(void *pointer)
 			return (NULL);
 		if (is_thinking(philo, rule))
 			return (NULL);
-		if (pthread_mutex_lock(&philo->left))
+		if (pthread_mutex_lock(philo->left))
 			return (NULL);
 		time = get_time(rule.time);
 		if (time == -1)
 			return (NULL);
 		printf("%5ld %3d has taken left fork\n", time, philo->id);
-		if (pthread_mutex_lock(&philo->right))
+		if (pthread_mutex_lock(philo->right))
 			return (NULL);
 		if (is_eating(philo, rule))
 			return (NULL);
