@@ -1,28 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccamie <ccamie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/08 18:07:57 by ccamie            #+#    #+#             */
-/*   Updated: 2022/04/08 19:38:59 by ccamie           ###   ########.fr       */
+/*   Created: 2022/04/08 18:08:03 by ccamie            #+#    #+#             */
+/*   Updated: 2022/04/28 14:23:45 by ccamie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	philosophers(int count, char **parameters);
+int	parser(t_data *data, int count, char **parameters);
+int	launch(t_data data);
 
-int	main(int argc, char **argv)
+int	philosophers(int count, char **parameters)
 {
-	if (argc == 5 || argc == 6)
+	t_data	data;
+
+	memset(&data, 0, sizeof(t_data));
+	if (parser(&data, count, parameters) != 0)
 	{
-		return (philosophers(--argc, ++argv));
+		remove_all(data);
+		write(2, "Error\n", 6);
+		return (EXIT_FAILURE);
+	}
+	if (launch(data) != 0)
+	{
+		remove_all(data);
+		write(2, "Error\n", 6);
+		return (EXIT_FAILURE);
 	}
 	else
 	{
-		write(2, "Error\n", 6);
-		return (EXIT_FAILURE);
+		remove_all(data);
+		return (EXIT_SUCCESS);
 	}
 }
