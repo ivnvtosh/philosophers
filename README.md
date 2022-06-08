@@ -1,6 +1,6 @@
 # Philosophers
 
-Multithreading
+Dining philosophers problem
 
 The goal of the project is to learn how to use synchronization primitive in processes and threads
 
